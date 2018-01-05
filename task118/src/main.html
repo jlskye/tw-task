@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/formStyle.css">
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../node_modules/lodash/lodash.min.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="js/main.js"></script>
+
+    <title>Form Designer</title>
+</head>
+<body>
+<div id="addFieldModal" title="增加字段">
+    <p class="validateTips">请选择字段：</p>
+    <div class="radio modelRadio ">
+        <label>
+            <input type="radio" name="radio2" id="optionsRadios1" value="文本" checked >
+            文本
+        </label>
+    </div>
+    <div class="radio modelRadio">
+        <label>
+            <input type="radio" name="radio2" id="optionsRadios2" value="日期">
+            日期
+        </label>
+    </div>
+</div>
+<div>
+    <div id="container">
+        <div id="Title" >表单设计器—jQuery 版</div>
+        <div id="operation">
+            <button id="addField" class="btn btn-success  pull-right form-btn" type="button"> 添加</button>
+            <button id="view" class="btn btn-success pull-right form-btn" type="button"> 预览</button>
+
+        </div>
+        <div id="formArea">
+            <ul id="inputList" >
+                <li>
+                    <input class="formList " type="text" value="日期">
+                    <button class="btn btn-success btn-sm form-btn" type="button"> 删除</button>
+                </li>
+                <li>
+                    <input class="formList" type="text" value="文本">
+                    <button class="btn btn-success btn-sm form-btn" type="button"> 删除</button>
+                </li>
+                <li>
+                    <input class="formList" type="text" value="日期">
+                    <button class="btn btn-success btn-sm form-btn" type="button"> 删除</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    /*点击添加按钮*/
+    $('#addField').click(function () {
+        $('#addFieldModal').dialog("open");
+    });
+    /*创建模态对话框*/
+    $('#addFieldModal').dialog({
+       autoOpen:false,
+        width:300,
+        height:350,
+        modal:true,
+        buttons:{
+            "取消":function(){
+                $(this).dialog("close");
+            },
+            "确定":function(){
+                var content = ($(":checked").val())
+                if(typeof(content)=='undefined'){
+                    alert("undefined")
+                }else {
+                    $('#inputList').append("<li> <input style=\"margin-right: 4px;\" class=\"formList \" type=\"text\" value="+content+">" +
+                            "<button class=\"btn btn-success btn-sm form-btn\" type=\"button\"> 删除</button></li>");
+                    $(this).dialog("close");
+                    $('li .form-btn').click(function () {
+                        $(this).parent().remove();
+                    });
+                }
+
+            }
+        }
+    });
+    /*删除选中项*/
+    $('li .form-btn').click(function () {
+        $(this).parent().remove();
+    })
+    $("#view").click(function () {
+        if($(this).text()=='预览'){
+            $(this).text('编辑');
+            $('#addField').hide();
+            $('li .form-btn').hide();
+        }else {
+            $(this).text('预览');
+
+            $('#addField').show();
+            $('li .form-btn').show();
+        }
+    });
+</script>
+
+</body>
+
+</html>
+
